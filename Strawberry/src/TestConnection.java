@@ -31,7 +31,7 @@ public static void main(String[] argv) {
 	if (connection != null) {
 		System.out.println("You made it, take control your database now!");
 	try {
-		PreparedStatement pst = connection.prepareStatement("select * from cafeuser where username='user' and pass='123456'");
+		PreparedStatement pst = connection.prepareStatement("select * from cafeuser where user_name='user' and user_pass='123456'");
 		ResultSet rs = pst.executeQuery();
 		System.out.println(rs);
 	} catch (Exception e) {

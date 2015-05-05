@@ -1,10 +1,11 @@
 package com.zerocchi.dao;  
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import com.zerocchi.connection.ConnectionProvider; 
 
 public class LoginDao {
     public static boolean validate(String name, String pass) {        
@@ -13,17 +14,11 @@ public class LoginDao {
         PreparedStatement pst = null;
         ResultSet rs = null;
 
-        String url = "jdbc:oracle:thin:@localhost:1521:xe";
-        String driver = "oracle.jdbc.driver.OracleDriver";
-        String userName = "oracle";
-        String password = "password";
         try {
-            Class.forName(driver);
-            conn = DriverManager
-                    .getConnection(url, userName, password);
+            conn = ConnectionProvider.getCon();
 
             pst = conn
-                    .prepareStatement("select * from cafeuser where username=? and pass=?");
+                    .prepareStatement("select * from cafeuser where user_name=? and user_pass=?");
             pst.setString(1, name);
             pst.setString(2, pass);
 
