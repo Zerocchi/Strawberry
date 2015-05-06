@@ -14,7 +14,7 @@
     <jsp:setProperty property="*" name="menu"/>  
       
     <%  
-    int status=MenuDao.delete(menu);  
+    int status=MenuDao.deleteMenu(menu);  
     if(status>0) {
     	out.print("Menu has been successfully deleted.");  
     }

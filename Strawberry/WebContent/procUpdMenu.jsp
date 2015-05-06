@@ -15,7 +15,7 @@
     
     <%  
     String tempMenu = request.getParameter("tempMenu");
-    int status=MenuDao.update(menu, "");  
+    int status=MenuDao.updateMenu(menu, "");  
     if(status>0) {
     	out.print("Menu has been successfully updated.");  
     }

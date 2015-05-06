@@ -5,7 +5,8 @@ import java.io.Serializable;
 public class Menu implements Serializable {
 
 	private static final long serialVersionUID = -8072555192585991919L;
-	
+
+	private int menuId;
 	private String menuName;
 	private double menuPrice;
 	
@@ -33,6 +34,14 @@ public class Menu implements Serializable {
 
 	public void setMenuName(String menuName) {
 		this.menuName = menuName;
+	}
+
+	public int getMenuId() {
+		return menuId;
+	}
+
+	public void setMenuId(int menuId) {
+		this.menuId = menuId;
 	}
 	
 }
