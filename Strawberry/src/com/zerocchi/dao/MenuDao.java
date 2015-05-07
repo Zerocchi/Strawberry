@@ -10,18 +10,16 @@ import java.util.List;
 public class MenuDao {  
 	
 	private static int STATUS=0;  
-	private static Connection con = null;
+	private Connection con;
 	
-	public MenuDao() {
-		// Prepare connection
-		con = ConnectionProvider.getCon();
-	}
+	public MenuDao() {}
   
 	// Add menu into database
-	public static int addMenu(Menu m){  
+	public int addMenu(Menu m){  
 				  
 		try {
-			
+			if(con == null)
+				con = ConnectionProvider.getCon();
 			PreparedStatement ps=con.prepareStatement("insert into cafemenu (menu_id, menu_name, menu_price) "
 					+ "values(menu_seqence.nextval, ?,?)");  
 			ps.setString(1,m.getMenuName());  
@@ -36,12 +34,13 @@ public class MenuDao {
 	}
 	
 	// Delete menu from database
-	public static int deleteMenu(Menu m){
+	public int deleteMenu(int menuId){
 		
 		try {    
-			
-			PreparedStatement ps=con.prepareStatement("delete from cafemenu where menu_name = ?");
-			ps.setString(1,m.getMenuName());     
+			if(con == null)
+				con = ConnectionProvider.getCon();
+			PreparedStatement ps=con.prepareStatement("delete from cafemenu where menu_id = ?");
+			ps.setInt(1,menuId);     
 			              
 			STATUS=ps.executeUpdate(); 
 			
@@ -52,15 +51,17 @@ public class MenuDao {
 	}
 	
 	// Update or edit menu from database
-	public static int updateMenu(Menu m, String tempMenu){
+	public int updateMenu(Menu m){
 		// how to determine the 'where' clause
+		// doesn't work
 		try {  
-			
+			if(con == null)
+				con = ConnectionProvider.getCon();
 			PreparedStatement ps=con.prepareStatement("update cafemenu set menu_name=?, menu_price=?"
-					+ "where menu_name=?");
+					+ "where menu_id=?");
 			ps.setString(1,m.getMenuName());
 			ps.setFloat(2,(float)m.getMenuPrice());
-			ps.setString(3,tempMenu);
+			ps.setInt(3,m.getMenuId());
 			              
 			STATUS=ps.executeUpdate();  
 			
@@ -72,9 +73,11 @@ public class MenuDao {
 	
 	// get menu by its name
 	public Menu getMenuByName(String name) {
+		if(con == null)
+			con = ConnectionProvider.getCon();
 		Menu menu = new Menu();
 		try {
-			PreparedStatement ps = con.prepareStatement("select menu_id, menu_name, menu_price from cafemenu"
+			PreparedStatement ps = con.prepareStatement("select distinct menu_id, menu_name, menu_price from cafemenu"
 					+ " where lower(menu_name) like ? ");
 			ps.setString(1, name);
 			ResultSet rs = ps.executeQuery();
@@ -91,12 +94,36 @@ public class MenuDao {
 		return menu;
 	}
 	
+	public Menu getMenuById(int menuId) {
+		if(con == null)
+			con = ConnectionProvider.getCon();
+		Menu menu = new Menu();
+		try {
+			PreparedStatement ps = con.prepareStatement("select distinct menu_id, menu_name, menu_price from cafemenu"
+					+ " where menu_id = ? ");
+			ps.setInt(1, menuId);
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next()){
+				menu.setMenuId(rs.getInt("menu_id"));
+				menu.setMenuName(rs.getString("menu_name"));
+				menu.setMenuPrice(rs.getDouble("menu_price"));
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return menu;
+	}
+	
 	// get all the menus
 	public List<Menu> getAllMenu() {
+		if(con == null)
+			con = ConnectionProvider.getCon();
 		List<Menu> menus = new ArrayList<>();
 		try {
 			Statement statement = con.createStatement();
-			ResultSet rs = statement.executeQuery("select * from cafemenu");
+			ResultSet rs = statement.executeQuery("select * from cafemenu order by menu_id");
 			
 			while(rs.next()){
 				Menu menu = new Menu();

@@ -5,14 +5,16 @@ import static com.zerocchi.connection.Provider.*;
 	  
 public class ConnectionProvider {  
 	private static Connection con=null;  
-	static{  
+	  
+	public static Connection getCon(){  
+		if (con != null)
+			return con;
+	else{
 		try{  
 			Class.forName(DRIVER);  
 			con=DriverManager.getConnection(CONNECTION_URL,USERNAME,PASSWORD);  
 		}catch(Exception e){}  
-	}  
-	  
-	public static Connection getCon(){  
-	    return con;  
+		}
+		return con;
 	}  
 }  

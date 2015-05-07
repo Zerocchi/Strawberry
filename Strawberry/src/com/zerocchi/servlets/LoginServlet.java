@@ -1,3 +1,4 @@
+
 package com.zerocchi.servlets;  
 
 import java.io.IOException;
@@ -27,11 +28,10 @@ public class LoginServlet extends HttpServlet{
         
         HttpSession session = request.getSession(false);
         if(session!=null)
-        session.setAttribute("name", n);
+        	session.setAttribute("name", n);
 
         if(LoginDao.validate(n, p)){  
-    		RequestDispatcher rd=request.getRequestDispatcher("welcome.jsp");  
-    		rd.forward(request,response);
+    		response.sendRedirect("admin.jsp");
         }  
         else{  
             out.print("<p style=\"color:red\">Sorry username or password error</p>");  
