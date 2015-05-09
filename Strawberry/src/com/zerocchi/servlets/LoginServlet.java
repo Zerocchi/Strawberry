@@ -13,6 +13,14 @@ import javax.servlet.http.HttpSession;
 
 import com.zerocchi.dao.LoginDao; 
 
+/**
+ * Login Servlet
+ * @author zerocchi
+ * The logged username will be stored in "name" attribute for current session.
+ * Planned to get the user_type from database instead. Need to edit LoginDao
+ * validate() method to return user_type (if user_type found) instead of boolean.
+ */
+
 public class LoginServlet extends HttpServlet{
 
     private static final long serialVersionUID = 1L;
@@ -26,17 +34,19 @@ public class LoginServlet extends HttpServlet{
         String n=request.getParameter("username");  
         String p=request.getParameter("userpass"); 
         
-        HttpSession session = request.getSession(false);
-        if(session!=null)
-        	session.setAttribute("name", n);
-
-        if(LoginDao.validate(n, p)){  
+        if(LoginDao.validate(n, p) && n.equals("admin")){  
+        	HttpSession session = request.getSession(false);
+            if(session!=null)
+            	session.setAttribute("user", n); // set session attribute of user name
     		response.sendRedirect("admin.jsp");
-        }  
-        else{  
-            out.print("<p style=\"color:red\">Sorry username or password error</p>");  
-            RequestDispatcher rd=request.getRequestDispatcher("index.jsp");  
-            rd.include(request,response);  
+        } else if(LoginDao.validate(n, p) && !n.equals("admin")) {
+        	HttpSession session = request.getSession(false);
+            if(session!=null)
+             	session.setAttribute("user", n);
+        	response.sendRedirect("user.jsp");
+        } else {  
+            RequestDispatcher rd=request.getRequestDispatcher("admincp.jsp");  
+            rd.forward(request,response);  
         }  
 
         out.close();  

@@ -1,6 +1,7 @@
 package com.zerocchi.servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,14 +17,14 @@ import com.zerocchi.bean.Menu;
 import com.zerocchi.dao.MenuDao;
 
 /**
- * Servlet implementation class MenuOpServlet
+ * Servlet implementation of menu controller
  */
 @WebServlet("/Menu")
 public class MenuController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MenuDao dao;
 	private static String INSERT_OR_EDIT = "/menu.jsp";
-    private static String LIST_USER = "/listMenu.jsp";
+    private static String LIST = "/listMenu.jsp";
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -31,7 +32,6 @@ public class MenuController extends HttpServlet {
     public MenuController() {
         super();
         dao = new MenuDao();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -40,7 +40,15 @@ public class MenuController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String forward = "";
 		String action = request.getParameter("action");
-
+		
+		HttpSession session = request.getSession();
+		if (session == null)
+		{
+		    String address = "index.jsp";
+		    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(address);
+		    dispatcher.forward(request,response);
+		} 
+		
 		if(action.equalsIgnoreCase("edit")) {
 			forward = INSERT_OR_EDIT;
 			int menuId = Integer.parseInt(request.getParameter("menuId"));
@@ -49,11 +57,11 @@ public class MenuController extends HttpServlet {
 		} else if(action.equalsIgnoreCase("delete")) {
 			int menuId = Integer.parseInt(request.getParameter("menuId"));
 			dao.deleteMenu(menuId);
-			forward = LIST_USER;
+			forward = LIST;
 			request.setAttribute("list", dao.getAllMenu());
 		} else if(action.equalsIgnoreCase("listMenu")) {
-			forward = LIST_USER;
-	        request.setAttribute("users", dao.getAllMenu());
+			forward = LIST;
+	        request.setAttribute("list", dao.getAllMenu());
 		} else if(action.equalsIgnoreCase("add")) {
 			forward = INSERT_OR_EDIT;
 		}
@@ -80,7 +88,7 @@ public class MenuController extends HttpServlet {
             menu.setMenuId(Integer.parseInt(menuid));
             dao.updateMenu(menu);
         }
-		RequestDispatcher view = request.getRequestDispatcher(LIST_USER);
+		RequestDispatcher view = request.getRequestDispatcher(LIST);
         request.setAttribute("list", dao.getAllMenu());
         view.forward(request, response);
 	}

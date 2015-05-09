@@ -5,38 +5,35 @@
 <html>
 <head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-<title>Strawberry Café - Admin Panel</title>
+<title>Strawberry Café - Order Panel</title>
 </head>
 <body>
 <c:choose>  
-<c:when test="${sessionScope.user eq 'admin'}"> <%-- check if user session is equal to admin --%>    
-<jsp:include page="adminNavBar.jsp" flush="true" />
+<c:when test="${sessionScope.user eq 'user'}"> <%-- check if user session is equal to admin --%>    
+<jsp:include page="userNavBar.jsp" flush="true" />
 
-   <div class="container">
+<div class="container">
 
      <!-- Main component for a primary marketing message or call to action -->
      <div class="jumbotron">
        <h1></h1>
      </div>
-     <table class="table table-hover">
-		<tr>
-		<th>Menu ID</th>
-		<th>Menu Name</th>
-		<th>Menu Price</th>
-		<th>Actions</th>
-		</tr>
-		<c:forEach var="menu" items="${list}">
-			<tr>
-				<td><c:out value="${menu.menuId}" /></td>
-				<td><c:out value="${menu.menuName}" /></td>
-				<td><c:out value="${menu.menuPrice}" /></td>
-				<td><a class="btn btn-sm btn-primary" href="Menu?action=edit&menuId=<c:out value="${menu.menuId}"/>">Update</a>
-				<a class="btn btn-sm btn-danger" href="Menu?action=delete&menuId=<c:out value="${menu.menuId}"/>">Delete</a></td>
-			</tr>
-		</c:forEach>
-	</table>
-	<p align="right"><a class="btn btn-dm btn-primary" href="Menu?action=add">Add Menu</a></p>
-   </div> <!-- /container -->
+		<table class="table table-hover">
+				<tr>
+				<th>Order Information</th>
+				<th>Action</th>
+				</tr>
+				<c:forEach var="order" items="${orderlist}">
+					<tr>
+					<td>${order.orderId} and ${order.userId}</td>
+					<td><a class="btn btn-sm btn-primary" href="Menu?action=add&orderId=<c:out value="${order.orderId}"/>">Add Menu</a>
+					<a class="btn btn-sm btn-primary" href="Order?action=edit&orderId=<c:out value="${order.orderId}"/>">Update Invoice</a>
+					<a class="btn btn-sm btn-danger" href="Order?action=delete&orderId=<c:out value="${order.orderId}"/>">Delete Invoice</a></td>
+					</tr>
+				</c:forEach>
+		</table>
+		<p align="right"><a class="btn btn-dm btn-primary" href="Order?action=add">Add Invoice</a></p>
+	</div> <!-- /container -->
 
 
     <!-- Bootstrap core JavaScript
@@ -46,6 +43,7 @@
     <script src="../../dist/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+
 </c:when>  
 <c:otherwise>
 <jsp:forward page="admincp.jsp" />

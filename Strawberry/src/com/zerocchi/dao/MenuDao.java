@@ -9,6 +9,11 @@ import java.util.List;
 
 public class MenuDao {  
 	
+	/**
+	 * Menu Data Access Object.
+	 * Control the menu database flow.
+	 */
+	
 	private static int STATUS=0;  
 	private Connection con;
 	
@@ -20,8 +25,8 @@ public class MenuDao {
 		try {
 			if(con == null)
 				con = ConnectionProvider.getCon();
-			PreparedStatement ps=con.prepareStatement("insert into cafemenu (menu_id, menu_name, menu_price) "
-					+ "values(menu_seqence.nextval, ?,?)");  
+			PreparedStatement ps=con.prepareStatement("insert into menu (menu_id, menu_name, menu_price) "
+					+ "values(menu_sequence.nextval, ?,?)");  
 			ps.setString(1,m.getMenuName());  
 			ps.setFloat(2,(float) m.getMenuPrice());    
 			              
@@ -39,7 +44,7 @@ public class MenuDao {
 		try {    
 			if(con == null)
 				con = ConnectionProvider.getCon();
-			PreparedStatement ps=con.prepareStatement("delete from cafemenu where menu_id = ?");
+			PreparedStatement ps=con.prepareStatement("delete from menu where menu_id = ?");
 			ps.setInt(1,menuId);     
 			              
 			STATUS=ps.executeUpdate(); 
@@ -52,12 +57,10 @@ public class MenuDao {
 	
 	// Update or edit menu from database
 	public int updateMenu(Menu m){
-		// how to determine the 'where' clause
-		// doesn't work
 		try {  
 			if(con == null)
 				con = ConnectionProvider.getCon();
-			PreparedStatement ps=con.prepareStatement("update cafemenu set menu_name=?, menu_price=?"
+			PreparedStatement ps=con.prepareStatement("update menu set menu_name=?, menu_price=?"
 					+ "where menu_id=?");
 			ps.setString(1,m.getMenuName());
 			ps.setFloat(2,(float)m.getMenuPrice());
@@ -77,7 +80,7 @@ public class MenuDao {
 			con = ConnectionProvider.getCon();
 		Menu menu = new Menu();
 		try {
-			PreparedStatement ps = con.prepareStatement("select distinct menu_id, menu_name, menu_price from cafemenu"
+			PreparedStatement ps = con.prepareStatement("select distinct menu_id, menu_name, menu_price from menu"
 					+ " where lower(menu_name) like ? ");
 			ps.setString(1, name);
 			ResultSet rs = ps.executeQuery();
@@ -99,7 +102,7 @@ public class MenuDao {
 			con = ConnectionProvider.getCon();
 		Menu menu = new Menu();
 		try {
-			PreparedStatement ps = con.prepareStatement("select distinct menu_id, menu_name, menu_price from cafemenu"
+			PreparedStatement ps = con.prepareStatement("select distinct menu_id, menu_name, menu_price from menu"
 					+ " where menu_id = ? ");
 			ps.setInt(1, menuId);
 			ResultSet rs = ps.executeQuery();
@@ -123,7 +126,7 @@ public class MenuDao {
 		List<Menu> menus = new ArrayList<>();
 		try {
 			Statement statement = con.createStatement();
-			ResultSet rs = statement.executeQuery("select * from cafemenu order by menu_id");
+			ResultSet rs = statement.executeQuery("select * from menu order by menu_id");
 			
 			while(rs.next()){
 				Menu menu = new Menu();

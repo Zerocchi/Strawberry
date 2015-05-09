@@ -2,6 +2,8 @@ package com.zerocchi.bean;
 
 import java.io.Serializable;
 
+// Menu bean
+
 public class Menu implements Serializable {
 
 	private static final long serialVersionUID = -8072555192585991919L;
@@ -25,7 +27,8 @@ public class Menu implements Serializable {
 	}
 
 	public void setMenuPrice(double menuPrice) {
-		this.menuPrice = menuPrice;
+		if(menuPrice > 0)
+			this.menuPrice = menuPrice;
 	}
 
 	public String getMenuName() {

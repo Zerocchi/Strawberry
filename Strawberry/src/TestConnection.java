@@ -7,7 +7,7 @@ public class TestConnection {
 public static void main(String[] argv) {
 	System.out.println("-------- Oracle JDBC Connection Testing ------");
 	String URL = "jdbc:oracle:thin:@localhost:1521:xe"; // xe stand for Oracle XE db name
-	String USERNAME = "oracle";
+	String USERNAME = "strawcafe";
 	String PASSWORD = "password";
 	// this is the password you set when you installed XE.
 	try {
@@ -31,9 +31,10 @@ public static void main(String[] argv) {
 	if (connection != null) {
 		System.out.println("You made it, take control your database now!");
 	try {
-		PreparedStatement pst = connection.prepareStatement("select * from cafeuser where user_name='user' and user_pass='123456'");
+		PreparedStatement pst = connection.prepareStatement("select * from users where user_name='admin' and user_pass='password'");
 		ResultSet rs = pst.executeQuery();
-		System.out.println(rs);
+		while(rs.next())
+			System.out.println(rs.getString("user_name"));
 	} catch (Exception e) {
 	    System.out.println(e);
 	} finally {

@@ -18,7 +18,7 @@ public class LoginDao {
             conn = ConnectionProvider.getCon();
 
             pst = conn
-                    .prepareStatement("select * from cafeuser where user_name=? and user_pass=?");
+                    .prepareStatement("select * from users where user_name=? and user_pass=?");
             pst.setString(1, name);
             pst.setString(2, pass);
 
