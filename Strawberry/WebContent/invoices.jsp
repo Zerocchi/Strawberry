@@ -33,17 +33,26 @@
 		    </tr>
 		    <tr>
 		        <td>Description</td> 
-		        <td><textarea name="description" rows="5" cols="50"
+		        <td><textarea name="description"  class="form-control" rows="5" cols="50"
 		            placeholder="Add optional description here"><c:out value="${order.description}"/></textarea>
 		        </td>
 	        </tr>
+	        <c:choose>  
+	        <c:when test="${sessionScope.user eq 'admin'}">
 	        <tr>
 		        <td>Status</td>
 		        <%-- will make this into dropdown box --%> 
-		        <td><input type="text" name="status"
-		            placeholder="0 for not done, 1 for done" value="<c:out value="${order.status}" />"/>
+		        <td><select name="status">
+				  <option value="0" selected>Incomplete</option>
+				  <option value="1">Complete</option>
+				  </select>
 		        </td>
 		    </tr>
+		    </c:when>
+		    <c:otherwise>
+		    <input type="hidden" name="status" value="0">
+		    </c:otherwise>
+		    </c:choose>
 		 		<tr align="center"><td colspan="2"><input type="submit" class="btn btn-info" value="Submit" />
 		 		<a class="btn btn-danger" href="order.jsp">Cancel</a></td>
 	 		</tr>

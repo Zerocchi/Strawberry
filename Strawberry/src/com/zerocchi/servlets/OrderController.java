@@ -53,6 +53,7 @@ public class OrderController extends HttpServlet {
 		if(action.equalsIgnoreCase("listOrder")){
 			forward = LIST;
 			int userId = userDAO.getUserByName((String)session.getAttribute("user")).getUserId();
+			//int userId = 2;
 	        request.setAttribute("orderlist", orderDAO.getAllOrderByUserId(userId));
 		} else if(action.equalsIgnoreCase("delete")){
 			orderDAO.deleteOrder(Integer.parseInt(request.getParameter("orderId")));

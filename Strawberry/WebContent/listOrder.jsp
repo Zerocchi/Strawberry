@@ -20,17 +20,21 @@
      </div>
 		<table class="table table-hover">
 				<tr>
-				<th>Order #</th>
-				<th>Description</th>
-				<th>Action</th>
+				<th style="text-align: center;">Order #</th>
+				<th style="text-align: center;">Description</th>
+				<th style="text-align: center;">Action</th>
 				</tr>
 				<c:forEach var="order" items="${orderlist}">
 					<tr>
-					<td>#${order.orderId}</td>
+					<td align="center">#${order.orderId}</td>
 					<td>${order.description}</td>
-					<td><a class="btn btn-sm btn-primary" href="OrderMenu?action=add&orderId=<c:out value="${order.orderId}"/>">Add Menu</a>
-					<a class="btn btn-sm btn-primary" href="Order?action=edit&orderId=<c:out value="${order.orderId}"/>">Update Invoice</a>
-					<a class="btn btn-sm btn-danger" href="Order?action=delete&orderId=<c:out value="${order.orderId}"/>">Delete Invoice</a></td>
+					<td align="center"><a class="btn btn-sm btn-primary" href="OrderMenu?action=listMenu&orderId=<c:out value="${order.orderId}"/>">
+					<span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>Menu List</a>
+					<a class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span>Status</a>
+					<a class="btn btn-sm btn-primary" href="Order?action=edit&orderId=<c:out value="${order.orderId}"/>">
+					<span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>Update</a>
+					<a class="btn btn-sm btn-danger" href="Order?action=delete&orderId=<c:out value="${order.orderId}"/>">
+					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>Delete</a></td>
 					</tr>
 				</c:forEach>
 		</table>

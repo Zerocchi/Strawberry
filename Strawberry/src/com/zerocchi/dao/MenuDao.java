@@ -55,6 +55,43 @@ public class MenuDao {
 		return STATUS; 
 	}
 	
+	public int deleteMenuFromOrder(int orderId, int menuId){
+		
+		try {    
+			if(con == null)
+				con = ConnectionProvider.getCon();
+			PreparedStatement ps=con.prepareStatement("delete from ordermenu where order_id = ? and menu_id = ?");
+			ps.setInt(1, orderId);
+			ps.setInt(2, menuId);
+			              
+			STATUS=ps.executeUpdate(); 
+			
+		}catch(Exception e){
+				e.printStackTrace();
+		}    
+		return STATUS; 
+	}
+	
+	public int addMenuToOrder(Menu m, int orderId){
+		
+		try {
+			if(con == null)
+				con = ConnectionProvider.getCon();
+			PreparedStatement ps=con.prepareStatement("insert into ordermenu (ordermenu_no, order_id, menu_id, quantity) "
+					+ "values(ordermenu_sequence.nextval, ?,?,?)");  
+			ps.setInt(1, orderId);  
+			ps.setInt(2, m.getMenuId());
+			ps.setInt(3, m.getQuantity());
+			              
+			STATUS=ps.executeUpdate();  
+			
+		} catch (SQLException e) {
+            e.printStackTrace();
+        }
+		return STATUS;
+		
+	}
+	
 	// Update or edit menu from database
 	public int updateMenu(Menu m){
 		try {  
@@ -133,6 +170,33 @@ public class MenuDao {
 				menu.setMenuId(rs.getInt("menu_id"));
 				menu.setMenuName(rs.getString("menu_name"));
 				menu.setMenuPrice(rs.getDouble("menu_price"));
+				menus.add(menu);
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return menus;
+	}
+	
+	// get all the menus by order ID
+	public List<Menu> getAllMenuByOrderId(int orderId) {
+		if(con == null)
+			con = ConnectionProvider.getCon();
+		List<Menu> menus = new ArrayList<>();
+		try {
+			PreparedStatement ps = con.prepareStatement("select m.menu_id as menu_id, m.menu_name as menu_name, "
+					+ "m.menu_price as menu_price, o.quantity as quantity from menu m join ordermenu o on o.menu_id = m.menu_id where o.order_id = ?");
+			ps.setInt(1, orderId);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()){
+				Menu menu = new Menu();
+				menu.setMenuId(rs.getInt("menu_id"));
+				menu.setMenuName(rs.getString("menu_name"));
+				menu.setMenuPrice(rs.getDouble("menu_price"));
+				menu.setQuantity(rs.getInt("quantity"));
 				menus.add(menu);
 			}
 			

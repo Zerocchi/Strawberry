@@ -35,7 +35,7 @@
 			</tr>
 		</c:forEach>
 	</table>
-	<p align="right"><a class="btn btn-dm btn-primary" href="Menu?action=add">Add Menu</a></p>
+	<p align="right"><a class="btn btn-dm btn-primary" href="Menu?action=add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add Menu</a></p>
    </div> <!-- /container -->
 
 

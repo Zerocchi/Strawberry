@@ -3,6 +3,7 @@ package com.zerocchi.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -122,18 +123,17 @@ public class OrderDao {
 			con = ConnectionProvider.getCon();
 		List<Order> orders = new ArrayList<>();
 		try {
-			PreparedStatement ps = con.prepareStatement("select o.order_id, o.status, u.user_id, u.user_name"
-					+ "from orders o, users u where u.user_id = o.user_id and u.user_id = ?");
+			PreparedStatement ps = con.prepareStatement("select o.order_id as order_id, o.user_id as user_id, o.description"
+					+ " as descr, o.status as status from orders o, users u where u.user_id = o.user_id and u.user_id = ?");
 			ps.setInt(1, userId);
 			
 			ResultSet rs = ps.executeQuery();
-			
 			
 			while(rs.next()){
 				Order order = new Order();
 				order.setOrderId(rs.getInt("order_id"));
 				order.setUserId(rs.getInt("user_id"));
-				order.setDescription(rs.getString("description"));
+				order.setDescription(rs.getString("descr"));
 				order.setStatus(rs.getInt("status"));
 				orders.add(order);
 			}

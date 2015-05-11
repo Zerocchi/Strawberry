@@ -11,10 +11,16 @@ public class Menu implements Serializable {
 	private int menuId;
 	private String menuName;
 	private double menuPrice;
+	private int quantity;
 	
-	public Menu(String menuName,double menuPrice) {
+	public Menu(String menuName, double menuPrice) {
 		this.setMenuName(menuName);
 		this.setMenuPrice(menuPrice);
+	}
+	
+	public Menu(int menuId, int quantity) {
+		this.setMenuId(menuId);
+		this.setQuantity(quantity);
 	}
 	
 	public Menu() {
@@ -45,6 +51,14 @@ public class Menu implements Serializable {
 
 	public void setMenuId(int menuId) {
 		this.menuId = menuId;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 	
 }
