@@ -30,7 +30,7 @@
   
   <c:choose>  
 	<c:when test="${sessionScope.user eq 'admin'}"> <%-- check if user session is equal to admin --%>
-	<jsp:forward page="admin.jsp" />
+	<c:redirect url="/admin.jsp" />
 	</c:when>  
 	<c:when test="${empty sessionScope.user}">
 	

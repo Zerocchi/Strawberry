@@ -52,7 +52,8 @@ public class OrderController extends HttpServlet {
 		
 		if(action.equalsIgnoreCase("listOrder")){
 			forward = LIST;
-	        request.setAttribute("orderlist", orderDAO.getAllOrder());
+			int userId = userDAO.getUserByName((String)session.getAttribute("user")).getUserId();
+	        request.setAttribute("orderlist", orderDAO.getAllOrderByUserId(userId));
 		} else if(action.equalsIgnoreCase("delete")){
 			orderDAO.deleteOrder(Integer.parseInt(request.getParameter("orderId")));
 			forward = LIST;
@@ -86,9 +87,10 @@ public class OrderController extends HttpServlet {
 			order.setOrderId(Integer.parseInt(orderid));
 			orderDAO.updateOrder(order);
 		}
-		RequestDispatcher view = request.getRequestDispatcher(LIST);
-		request.setAttribute("orderlist", orderDAO.getAllOrder());
-        view.forward(request, response);
+		//RequestDispatcher view = request.getRequestDispatcher(LIST);
+		//request.setAttribute("orderlist", orderDAO.getAllOrder());
+        //view.forward(request, response);
+		response.sendRedirect(request.getContextPath() + "/order.jsp");
 	}
 
 }

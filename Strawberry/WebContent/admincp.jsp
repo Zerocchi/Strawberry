@@ -10,7 +10,11 @@
 <title>Strawberry Café</title>
 </head>
 <body>
-
+<c:choose>  
+<c:when test="${sessionScope.user eq 'admin'}"> <%-- check if user session is equal to admin --%>
+<c:redirect url="/admin.jsp" />
+</c:when>  
+<c:otherwise>
       <div class="container" style="margin-top:40px">
 		<div class="row">
 			<div class="col-sm-6 col-md-4 col-md-offset-4">
@@ -61,5 +65,7 @@
 		</div>
 	</div>
 	<p align="center"><a href="index.jsp"><button type="button" class="btn btn-default">Back to Main Page</button></a></p>
+</c:otherwise>
+</c:choose>
 </body>
 </html>

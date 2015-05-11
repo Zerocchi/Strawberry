@@ -88,9 +88,10 @@ public class MenuController extends HttpServlet {
             menu.setMenuId(Integer.parseInt(menuid));
             dao.updateMenu(menu);
         }
-		RequestDispatcher view = request.getRequestDispatcher(LIST);
-        request.setAttribute("list", dao.getAllMenu());
-        view.forward(request, response);
+		//RequestDispatcher view = request.getRequestDispatcher(LIST);
+        //request.setAttribute("list", dao.getAllMenu());
+        response.sendRedirect(request.getContextPath() + "/admin.jsp");
+        //view.forward(request, response);
 	}
 
 }

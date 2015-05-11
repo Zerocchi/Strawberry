@@ -20,13 +20,15 @@
      </div>
 		<table class="table table-hover">
 				<tr>
-				<th>Order Information</th>
+				<th>Order #</th>
+				<th>Description</th>
 				<th>Action</th>
 				</tr>
 				<c:forEach var="order" items="${orderlist}">
 					<tr>
-					<td>${order.orderId} and ${order.userId}</td>
-					<td><a class="btn btn-sm btn-primary" href="Menu?action=add&orderId=<c:out value="${order.orderId}"/>">Add Menu</a>
+					<td>#${order.orderId}</td>
+					<td>${order.description}</td>
+					<td><a class="btn btn-sm btn-primary" href="OrderMenu?action=add&orderId=<c:out value="${order.orderId}"/>">Add Menu</a>
 					<a class="btn btn-sm btn-primary" href="Order?action=edit&orderId=<c:out value="${order.orderId}"/>">Update Invoice</a>
 					<a class="btn btn-sm btn-danger" href="Order?action=delete&orderId=<c:out value="${order.orderId}"/>">Delete Invoice</a></td>
 					</tr>

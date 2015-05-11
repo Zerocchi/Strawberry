@@ -117,6 +117,33 @@ public class OrderDao {
 		return orders;
 	}
 	
+	public List<Order> getAllOrderByUserId(int userId) {
+		if(con == null)
+			con = ConnectionProvider.getCon();
+		List<Order> orders = new ArrayList<>();
+		try {
+			PreparedStatement ps = con.prepareStatement("select o.order_id, o.status, u.user_id, u.user_name"
+					+ "from orders o, users u where u.user_id = o.user_id and u.user_id = ?");
+			ps.setInt(1, userId);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			
+			while(rs.next()){
+				Order order = new Order();
+				order.setOrderId(rs.getInt("order_id"));
+				order.setUserId(rs.getInt("user_id"));
+				order.setDescription(rs.getString("description"));
+				order.setStatus(rs.getInt("status"));
+				orders.add(order);
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return orders;
+	}
+	
 	public int updateOrder(Order o){
 		try {  
 			if(con == null)

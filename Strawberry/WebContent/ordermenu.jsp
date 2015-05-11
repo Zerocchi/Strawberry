@@ -16,6 +16,12 @@
 	    <form method="POST" action='Menu' name="frmAddMenu">
 	    <table class="table table-bordered" style="width:40%" align="center">
 	        <tr><th colspan="2" style="text-align:center"><span class="glyphicon glyphicon-user"></span> Add/Edit Menu</th></tr>
+	         <tr>
+		        <td>Order ID</td> 
+	        	<td>
+		        	#0000
+	        	</td>
+	        </tr> 
 	        <tr>
 		        <td>Menu ID</td> 
 	        	<td>
