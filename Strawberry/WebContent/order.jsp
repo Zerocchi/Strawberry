@@ -10,7 +10,7 @@
 </head>
 <body>
 <c:choose>  
-<c:when test="${sessionScope.user eq 'user'}"> <%-- check if user session is equal to user --%>
+<c:when test="${sessionScope.user eq 'user' or sessionScope.user eq 'admin'}"> <%-- check if user session is equal to user or admin --%>
 <jsp:forward page="/Order?action=listOrder" />
 </c:when>  
 <c:otherwise>

@@ -25,7 +25,7 @@
           <ul class="nav navbar-nav">
             <li><a href="admin.jsp">Home</a></li>
             <li><a href="Menu?action=add">Add Menu</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="order.jsp">List Orders</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
           	<li><a href=#>You are logged in as <strong><c:out value="${sessionScope.user}"/></strong></a></li>

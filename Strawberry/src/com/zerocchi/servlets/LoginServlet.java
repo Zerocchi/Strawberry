@@ -45,8 +45,7 @@ public class LoginServlet extends HttpServlet{
              	session.setAttribute("user", n);
         	response.sendRedirect("user.jsp");
         } else {  
-            RequestDispatcher rd=request.getRequestDispatcher("admincp.jsp");  
-            rd.forward(request,response);  
+        	response.sendRedirect("loginerror.jsp"); 
         }  
 
         out.close();  

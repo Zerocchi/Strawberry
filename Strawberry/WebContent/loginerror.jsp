@@ -7,20 +7,20 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-<title>Strawberry Café</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<title>Strawberry Café - Login Error</title>
 </head>
 <body>
-<c:choose>  
-<c:when test="${sessionScope.user eq 'admin'}"> <%-- check if user session is equal to admin --%>
-<c:redirect url="/admin.jsp" />
-</c:when>  
-<c:otherwise>
+
+<div class="alert alert-danger" role="alert"><a href="#" class="close" data-dismiss="alert">&times;</a>
+Your credentials is wrong. Please try again.</div>
       <div class="container" style="margin-top:40px">
 		<div class="row">
 			<div class="col-sm-6 col-md-4 col-md-offset-4">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<strong> Admin Panel</strong>
+						<strong> Login</strong>
 					</div>
 					<div class="panel-body">
 						<form role="form" action="Login" method="POST">
@@ -65,7 +65,6 @@
 		</div>
 	</div>
 	<p align="center"><a href="index.jsp"><button type="button" class="btn btn-default">Back to Main Page</button></a></p>
-</c:otherwise>
-</c:choose>
+	
 </body>
 </html>

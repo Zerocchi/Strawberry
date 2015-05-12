@@ -9,8 +9,13 @@
 </head>
 <body>
 <c:choose>  
-<c:when test="${sessionScope.user eq 'user'}"> <%-- check if user session is equal to admin --%>    
+<c:when test="${sessionScope.user eq 'user'}">    
 <jsp:include page="userNavBar.jsp" flush="true" />
+</c:when>  
+<c:when test="${sessionScope.user eq 'admin'}"> 
+<jsp:include page="adminNavBar.jsp" flush="true" />
+</c:when>  
+</c:choose>
 
 <div class="container">
 
@@ -30,7 +35,8 @@
 					<td>${order.description}</td>
 					<td align="center"><a class="btn btn-sm btn-primary" href="OrderMenu?action=listMenu&orderId=<c:out value="${order.orderId}"/>">
 					<span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>Menu List</a>
-					<a class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span>Status</a>
+					<a class="btn btn-sm btn-primary" href="Order?action=status&orderId=<c:out value="${order.orderId}"/>">
+					<span class="glyphicon glyphicon-bell" aria-hidden="true"></span>Status</a>
 					<a class="btn btn-sm btn-primary" href="Order?action=edit&orderId=<c:out value="${order.orderId}"/>">
 					<span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>Update</a>
 					<a class="btn btn-sm btn-danger" href="Order?action=delete&orderId=<c:out value="${order.orderId}"/>">
@@ -38,7 +44,7 @@
 					</tr>
 				</c:forEach>
 		</table>
-		<p align="right"><a class="btn btn-dm btn-primary" href="Order?action=add">Add Invoice</a></p>
+		<p align="right"><a class="btn btn-dm btn-primary" href="Order?action=add">Add Order</a></p>
 	</div> <!-- /container -->
 
 
@@ -50,10 +56,5 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
 
-</c:when>  
-<c:otherwise>
-<jsp:forward page="admincp.jsp" />
-</c:otherwise>
-</c:choose>
 </body>
 </html>

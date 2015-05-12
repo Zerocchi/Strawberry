@@ -27,6 +27,7 @@
 				<th>Menu Name</th>
 				<th>Menu Price</th>
 				<th>Quantity</th>
+				<th>Price</th>
 				<th>Action</th>
 				</tr>
 				<c:forEach var="menu" items="${menulist}">
@@ -39,6 +40,7 @@
 					<td>${menu.menuName}</td>
 					<td>${menu.menuPrice}</td>
 					<td>${menu.quantity}</td>
+					<td>${menu.menuPrice * menu.quantity}</td>
 					<td><a class="btn btn-sm btn-danger" href="OrderMenu?action=delete&orderId=${orderId}&menuId=${menu.menuId}">Delete Menu</a></td>
 					</tr>
 				</c:forEach>
@@ -51,6 +53,7 @@
 						</select>
 					</td>
 					<td><input type="number" class="form-control" name="quantity" min="1" max="50" step="1" value="1"></td>
+					<td></td>
 					<td><input type="submit" class="btn btn-sm btn-primary" value="Add Menu"></td>
 		</table>
 		</form>

@@ -33,7 +33,10 @@
 	<c:redirect url="/admin.jsp" />
 	</c:when>  
 	<c:when test="${empty sessionScope.user}">
-	
+
+	<c:if test="${not empty wrongcredential}">
+        <strong>Error!</strong> Your username or password is wrong. Please try again.
+	</c:if>
 
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">

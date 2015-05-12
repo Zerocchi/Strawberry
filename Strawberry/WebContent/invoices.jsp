@@ -17,7 +17,7 @@
      </div>
 	    <form method="POST" action='Order' name="frmAddMenu">
 	    <table class="table table-bordered" style="width:40%" align="center">
-	        <tr><th colspan="2" style="text-align:center"><span class="glyphicon glyphicon-user"></span> Add Invoices</th></tr>
+	        <tr><th colspan="2" style="text-align:center"><span class="glyphicon glyphicon-user"></span> Add/Edit Invoices</th></tr>
 	        <tr>
 		        <td>Order ID</td> 
 	        	<td>
@@ -26,10 +26,20 @@
 	        	</td>
 	        </tr> 
 	        <tr>
+	        	<c:choose>  
+				<c:when test="${sessionScope.user eq 'admin'}">    
 		        <td>User</td> 
+		        <td><input type="text" name="user"
+		            placeholder="<c:out value="${sessionScope.user}" />" value="<c:out value="${order.userId}" />"/>
+		        </td>
+		        </c:when>
+		    	<c:otherwise>
+		    	<td>User</td> 
 		        <td><input type="text" name="user" readonly="readonly"
 		            placeholder="<c:out value="${sessionScope.user}" />" value="<c:out value="${order.userId}" />"/>
 		        </td>
+		    	</c:otherwise>
+		    	</c:choose>
 		    </tr>
 		    <tr>
 		        <td>Description</td> 
@@ -43,8 +53,16 @@
 		        <td>Status</td>
 		        <%-- will make this into dropdown box --%> 
 		        <td><select name="status">
-				  <option value="0" selected>Incomplete</option>
-				  <option value="1">Complete</option>
+					<c:choose>  
+	        		<c:when test="${order.status eq '0'}">
+				  		<option value="0" selected>Incomplete</option>
+				  		<option value="1">Complete</option>
+				  	</c:when>
+				  	<c:otherwise>
+				  		<option value="0">Incomplete</option>
+				  		<option value="1" selected>Complete</option>
+				  	</c:otherwise>
+				  	</c:choose>
 				  </select>
 		        </td>
 		    </tr>

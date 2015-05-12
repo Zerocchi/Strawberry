@@ -161,4 +161,43 @@ public class OrderDao {
 		}  
 		return STATUS; 
 	}
+
+	public int getTotalMenuInOrder(int orderId) {
+		
+		int count = 0;
+		
+		try {  
+			if(con == null)
+				con = ConnectionProvider.getCon();
+			PreparedStatement ps=con.prepareStatement("select count(menu_id) as total from ordermenu where order_id = ?");
+			ps.setInt(1,orderId);
+
+			ResultSet rs =ps.executeQuery();
+			if(rs.next()){
+				count = rs.getInt("total");
+			}
+			
+		}catch(Exception e){
+				e.printStackTrace();
+		}  
+		return count;
+	}
+
+	public int deleteAllMenuInOrder(int orderId) {
+		
+		try {    
+			if(con == null)
+				con = ConnectionProvider.getCon();
+			PreparedStatement ps=con.prepareStatement("delete from ordermenu where order_id = ?");
+			ps.setInt(1,orderId);     
+			              
+			STATUS=ps.executeUpdate(); 
+			
+		}catch(Exception e){
+				e.printStackTrace();
+		}    
+		
+		return STATUS;
+	}
+	
 }

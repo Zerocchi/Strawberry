@@ -30,6 +30,7 @@ public class OrderController extends HttpServlet {
 	private UserDao userDAO;
 	private static String LIST = "listOrder.jsp";
 	private static String ADD_OR_EDIT = "invoices.jsp";
+	private static String ORDER_STATUS = "orderstatus.jsp";
 	List<OrderMenu> menus;
        
     /**
@@ -53,9 +54,17 @@ public class OrderController extends HttpServlet {
 		if(action.equalsIgnoreCase("listOrder")){
 			forward = LIST;
 			int userId = userDAO.getUserByName((String)session.getAttribute("user")).getUserId();
-			//int userId = 2;
-	        request.setAttribute("orderlist", orderDAO.getAllOrderByUserId(userId));
+			if(session.getAttribute("user").equals("admin")){
+				request.setAttribute("orderlist", orderDAO.getAllOrder());
+			} else {
+				request.setAttribute("orderlist", orderDAO.getAllOrderByUserId(userId));
+			}
 		} else if(action.equalsIgnoreCase("delete")){
+			// TODO: if menu exist in order, delete menu first.
+			int totalOrder = orderDAO.getTotalMenuInOrder(Integer.parseInt(request.getParameter("orderId")));
+			if(totalOrder > 0){
+				orderDAO.deleteAllMenuInOrder(Integer.parseInt(request.getParameter("orderId")));
+			}
 			orderDAO.deleteOrder(Integer.parseInt(request.getParameter("orderId")));
 			forward = LIST;
 			request.setAttribute("orderlist", orderDAO.getAllOrder());
@@ -66,6 +75,11 @@ public class OrderController extends HttpServlet {
 			int orderId = Integer.parseInt(request.getParameter("orderId"));
             Order order = orderDAO.getOrderById(orderId);
             request.setAttribute("order", order);
+		} else if(action.equalsIgnoreCase("status")){
+			forward = ORDER_STATUS;
+			int orderId = Integer.parseInt(request.getParameter("orderId"));
+			Order order = orderDAO.getOrderById(orderId);
+			request.setAttribute("order", order);
 		}
 		
 		RequestDispatcher view = request.getRequestDispatcher(forward);
