@@ -66,6 +66,7 @@ public class PersonalController extends HttpServlet {
 		customer.setCustomerName(request.getParameter("custname"));
 		customer.setCustomerEmail(request.getParameter("custemail"));
 		customer.setCustomerPhoneNo(Integer.parseInt(request.getParameter("custphone")));
+		customer.setCustomerAddress(request.getParameter("address"));
 		String custid = request.getParameter("custid");
 		if(custid == null || custid.isEmpty())
 			userDAO.newCustomer(customer);
