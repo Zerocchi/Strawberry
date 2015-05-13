@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.zerocchi.bean.Customer;
 import com.zerocchi.bean.Menu;
 import com.zerocchi.bean.Order;
 import com.zerocchi.bean.OrderMenu;
@@ -60,14 +61,19 @@ public class OrderController extends HttpServlet {
 				request.setAttribute("orderlist", orderDAO.getAllOrder());
 			} else {
 				forward = NEXT_MENU;
-				request.setAttribute("orderlist", orderDAO.getOrderByRandomNumber((int)session.getAttribute("random")));
+				request.setAttribute("personal", userDAO.getCustomerById((int)session.getAttribute("custid")));
+				request.setAttribute("orderlist", orderDAO.getOrderByCustomerId((int)session.getAttribute("custid")));
 			}
 		} else if(action.equalsIgnoreCase("delete")){
-			// TODO: if menu exist in order, delete menu first.
+			// TODO: if menu exist in order, delete menu first to avoid violation.
 			int totalOrder = orderDAO.getTotalMenuInOrder(Integer.parseInt(request.getParameter("orderId")));
-			if(totalOrder > 0){
-				orderDAO.deleteAllMenuInOrder(Integer.parseInt(request.getParameter("orderId")));
+			int personalInfo = userDAO.getCustomerNameLengthInOrder(Integer.parseInt(request.getParameter("orderId")));
+			if(personalInfo > 0) {
+				userDAO.deleteUserInfoInOrder(Integer.parseInt(request.getParameter("orderId")));
 			}
+			if(totalOrder > 0) {
+				orderDAO.deleteAllMenuInOrder(Integer.parseInt(request.getParameter("orderId")));
+			} 
 			orderDAO.deleteOrder(Integer.parseInt(request.getParameter("orderId")));
 			forward = LIST;
 			request.setAttribute("orderlist", orderDAO.getAllOrder());
@@ -77,7 +83,9 @@ public class OrderController extends HttpServlet {
 			forward = ADD_OR_EDIT;
 			int orderId = Integer.parseInt(request.getParameter("orderId"));
             Order order = orderDAO.getOrderById(orderId);
+            Customer customer = userDAO.getCustomerDetails(orderId);
             request.setAttribute("order", order);
+            request.setAttribute("customer", customer);
 		} else if(action.equalsIgnoreCase("status")){
 			forward = ORDER_STATUS;
 			int orderId = Integer.parseInt(request.getParameter("orderId"));
@@ -94,11 +102,14 @@ public class OrderController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
+		
+		// get random number for customer id
 		Random rand = new Random();
-		int randomNum = rand.nextInt();
-		session.setAttribute("random", randomNum);
+		int randomNum = rand.nextInt(10000); 
+		session.setAttribute("custid", randomNum);
+		
 		Order order = new Order();
-		order.setRandomNum(randomNum);
+		order.setCustomerId(randomNum);
 		order.setUserId(userDAO.getUserByName((String)session.getAttribute("user")).getUserId());
 		order.setDescription(request.getParameter("description"));
 		order.setStatus(Integer.parseInt(request.getParameter("status")));
@@ -115,7 +126,7 @@ public class OrderController extends HttpServlet {
 		if(session.getAttribute("user").equals("admin"))
 			response.sendRedirect(request.getContextPath() + "/order.jsp");
 		else
-			response.sendRedirect(request.getContextPath() + "/nextStep.jsp");
+			response.sendRedirect(request.getContextPath() + "/personalStep.jsp");
 	}
 
 }

@@ -28,7 +28,7 @@
 					</div>
 					<div class="panel-body">
 						<div class="form-group" align="center">
-							Thanks for ordering with us. Your order ID is <strong>${orderId}</strong>. Please write it down on a medium.
+							Thanks for ordering with us! Your order ID is <strong>${orderId}</strong>. Please write it down on a medium.
 							Total price of your ordering is RM<strong>${totalPrice}</strong>.
 						</div>
 						<div class="form-group" align="center">

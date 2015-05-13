@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
 <title>Strawberry Cafe - Add or edit menu</title>
 </head>
 <body>
@@ -25,22 +26,6 @@
 							value="<c:out value="${order.orderId}" />">
 	        	</td>
 	        </tr> 
-	        <tr>
-	        	<c:choose>  
-				<c:when test="${sessionScope.user eq 'admin'}">    
-		        <td>User</td> 
-		        <td><input type="text" name="user"
-		            placeholder="<c:out value="${sessionScope.user}" />" value="<c:out value="${order.userId}" />"/>
-		        </td>
-		        </c:when>
-		    	<c:otherwise>
-		    	<td>User</td> 
-		        <td><input type="text" name="user" readonly="readonly"
-		            placeholder="<c:out value="${sessionScope.user}" />" value="<c:out value="${order.userId}" />"/>
-		        </td>
-		    	</c:otherwise>
-		    	</c:choose>
-		    </tr>
 		    <tr>
 		        <td>Description</td> 
 		        <td><textarea name="description"  class="form-control" rows="5" cols="50"
@@ -49,10 +34,14 @@
 	        </tr>
 	        <c:choose>  
 	        <c:when test="${sessionScope.user eq 'admin'}">
+	        <tr><td>Name</td><td>${customer.customerName}</td></tr>
+	        <tr><td>Phone No</td><td>${customer.customerPhoneNo}</td></tr>
+	        <tr><td>E-mail</td><td>${customer.customerEmail}</td></tr>
+	        <tr><td>Address</td><td>${customer.customerAddress}</td></tr>
 	        <tr>
 		        <td>Status</td>
 		        <%-- will make this into dropdown box --%> 
-		        <td><select name="status">
+		        <td><select name="status" class="form-control">
 					<c:choose>  
 	        		<c:when test="${order.status eq '0'}">
 				  		<option value="0" selected>Incomplete</option>
@@ -68,11 +57,12 @@
 		    </tr>
 		    </c:when>
 		    <c:otherwise>
+		    <input type="hidden" name="user" value="2">
 		    <input type="hidden" name="status" value="0">
 		    </c:otherwise>
 		    </c:choose>
 		 		<tr align="center"><td colspan="2"><input type="submit" class="btn btn-info" value="Submit" />
-		 		<a class="btn btn-danger" href="order.jsp">Cancel</a></td>
+		 		<a class="btn btn-danger" href="index.jsp">Cancel</a></td>
 	 		</tr>
 	 	</table>
 	    </form>

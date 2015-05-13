@@ -28,11 +28,11 @@ public class OrderDao {
 		try {
 			if(con == null)
 				con = ConnectionProvider.getCon();
-			PreparedStatement ps=con.prepareStatement("insert into orders (order_id, user_id, description, status, random_num) "
+			PreparedStatement ps=con.prepareStatement("insert into orders (order_id, user_id, description, status, customer_id) "
 					+ "values (order_seq.nextval, ?, ?, 0, ?)");  
 			ps.setInt(1,o.getUserId());
 			ps.setString(2, o.getDescription());
-			ps.setInt(3, o.getRandomNum());
+			ps.setInt(3, o.getCustomerId());
 			              
 			STATUS = ps.executeUpdate();
 			
@@ -96,14 +96,14 @@ public class OrderDao {
 		return order;
 	}
 	
-	public Order getOrderByRandomNumber(int randomNum) {
+	public Order getOrderByCustomerId(int customerId) {
 		if(con == null)
 			con = ConnectionProvider.getCon();
 		Order order = new Order();
 		try {
 			PreparedStatement ps = con.prepareStatement("select distinct * from orders"
-					+ " where random_num = ? ");
-			ps.setInt(1, randomNum);
+					+ " where customer_id = ? ");
+			ps.setInt(1, customerId);
 			ResultSet rs = ps.executeQuery();
 			
 			if(rs.next()){
@@ -111,7 +111,7 @@ public class OrderDao {
 				order.setUserId(rs.getInt("user_id"));
 				order.setDescription(rs.getString("description"));
 				order.setStatus(rs.getInt("status"));
-				order.setRandomNum(rs.getInt("random_num"));
+				order.setCustomerId(rs.getInt("customer_id"));
 			}
 			
 		} catch(Exception e) {
@@ -225,7 +225,7 @@ public class OrderDao {
 		return STATUS;
 	}
 
-	public double getTotalPriceByRandomNum(int randomNum) {
+	public double getTotalPriceByCustomerId(int customerId) {
 		
 		int totalPrice = 0;
 		
@@ -233,8 +233,8 @@ public class OrderDao {
 			con = ConnectionProvider.getCon();
 		try {
 			PreparedStatement ps = con.prepareStatement("select sum(m.menu_price * om.quantity) as total from ordermenu om, "
-					+ "orders o, menu m where om.order_id = o.order_id and om.menu_id = m.menu_id and o.random_num = ?");
-			ps.setInt(1, randomNum);
+					+ "orders o, menu m where om.order_id = o.order_id and om.menu_id = m.menu_id and o.customer_id = ?");
+			ps.setInt(1, customerId);
 			ResultSet rs = ps.executeQuery();
 			
 			if(rs.next()){
@@ -271,14 +271,14 @@ public class OrderDao {
 		return totalPrice;
 	}
 	
-	public int getOrderIdByRandomNum(int randomNum){
+	public int getOrderIdByCustomerId(int customerId){
 		int orderId = 0;
 		
 		if(con == null)
 			con = ConnectionProvider.getCon();
 		try {
-			PreparedStatement ps = con.prepareStatement("select order_id from orders where random_num = ?");
-			ps.setInt(1, randomNum);
+			PreparedStatement ps = con.prepareStatement("select order_id from orders where customer_id = ?");
+			ps.setInt(1, customerId);
 			ResultSet rs = ps.executeQuery();
 			
 			if(rs.next()){

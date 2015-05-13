@@ -79,8 +79,8 @@ public class OrderMenuController extends HttpServlet {
             request.setAttribute("order", order);
 		} else if(action.equalsIgnoreCase("checkout")){
 			forward = CHECKOUT;
-			int orderIdFromRand = orderDAO.getOrderIdByRandomNum((int)session.getAttribute("random"));
-			request.setAttribute("totalPrice", orderDAO.getTotalPriceByOrderId(orderIdFromRand));
+			int orderIdFromCustId = orderDAO.getOrderIdByCustomerId((int)session.getAttribute("custid"));
+			request.setAttribute("totalPrice", orderDAO.getTotalPriceByOrderId(orderIdFromCustId));
 			request.setAttribute("orderId", orderId);
 			session.invalidate();
 		}

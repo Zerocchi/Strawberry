@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-<title>Insert title here</title>
+<title>Next Step...</title>
 </head>
 <body>
 
@@ -27,7 +27,7 @@
 					</div>
 					<div class="panel-body">
 						<div class="form-group" align="center">
-							Now that you have placed your order, time to proceed to menu selection.
+							Congratulations ${personal.customerName}! Now that you have placed your order, time to proceed to menu selection.
 						</div>
 						<div class="form-group" align="center">
 							<a class="btn btn-sm btn-primary" href="OrderMenu?action=listMenu&orderId=<c:out value="${orderlist.orderId}"/>">
