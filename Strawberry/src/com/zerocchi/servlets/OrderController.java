@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -29,6 +30,7 @@ public class OrderController extends HttpServlet {
 	private OrderDao orderDAO;
 	private UserDao userDAO;
 	private static String LIST = "listOrder.jsp";
+	private static String NEXT_MENU = "menuPage.jsp";
 	private static String ADD_OR_EDIT = "invoices.jsp";
 	private static String ORDER_STATUS = "orderstatus.jsp";
 	List<OrderMenu> menus;
@@ -52,12 +54,13 @@ public class OrderController extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		if(action.equalsIgnoreCase("listOrder")){
-			forward = LIST;
-			int userId = userDAO.getUserByName((String)session.getAttribute("user")).getUserId();
+			//int userId = userDAO.getUserByName((String)session.getAttribute("user")).getUserId();
 			if(session.getAttribute("user").equals("admin")){
+				forward = LIST;
 				request.setAttribute("orderlist", orderDAO.getAllOrder());
 			} else {
-				request.setAttribute("orderlist", orderDAO.getAllOrderByUserId(userId));
+				forward = NEXT_MENU;
+				request.setAttribute("orderlist", orderDAO.getOrderByRandomNumber((int)session.getAttribute("random")));
 			}
 		} else if(action.equalsIgnoreCase("delete")){
 			// TODO: if menu exist in order, delete menu first.
@@ -91,7 +94,11 @@ public class OrderController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
+		Random rand = new Random();
+		int randomNum = rand.nextInt();
+		session.setAttribute("random", randomNum);
 		Order order = new Order();
+		order.setRandomNum(randomNum);
 		order.setUserId(userDAO.getUserByName((String)session.getAttribute("user")).getUserId());
 		order.setDescription(request.getParameter("description"));
 		order.setStatus(Integer.parseInt(request.getParameter("status")));
@@ -105,7 +112,10 @@ public class OrderController extends HttpServlet {
 		//RequestDispatcher view = request.getRequestDispatcher(LIST);
 		//request.setAttribute("orderlist", orderDAO.getAllOrder());
         //view.forward(request, response);
-		response.sendRedirect(request.getContextPath() + "/order.jsp");
+		if(session.getAttribute("user").equals("admin"))
+			response.sendRedirect(request.getContextPath() + "/order.jsp");
+		else
+			response.sendRedirect(request.getContextPath() + "/nextStep.jsp");
 	}
 
 }

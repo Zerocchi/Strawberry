@@ -27,17 +27,6 @@
   </head>
 
   <body>
-  
-  <c:choose>  
-	<c:when test="${sessionScope.user eq 'admin'}"> <%-- check if user session is equal to admin --%>
-	<c:redirect url="/admin.jsp" />
-	</c:when>  
-	<c:when test="${empty sessionScope.user}">
-
-	<c:if test="${not empty wrongcredential}">
-        <strong>Error!</strong> Your username or password is wrong. Please try again.
-	</c:if>
-
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
@@ -50,14 +39,11 @@
           <a class="navbar-brand" href="#">Strawberry Cafe</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right" action="Login" method="POST">
+          <form class="navbar-form navbar-right" action="Status">
             <div class="form-group">
-              <input type="text" placeholder="Username" name="username" class="form-control">
+              <input type="text" placeholder="Check order status here" name="orderId" class="form-control">
             </div>
-            <div class="form-group">
-              <input type="password" placeholder="Password" name="userpass" class="form-control">
-            </div>
-            <button type="submit" class="btn btn-success">Sign in</button>
+            <button type="submit" class="btn btn-success">Check</button>
           </form>
         </div><!--/.navbar-collapse -->
       </div>
@@ -66,9 +52,9 @@
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
       <div class="container">
-        <h1>Hello, world!</h1>
-        <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-        <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+        <h1>Hello, customer!</h1>
+        <p>Please order now.</p>
+        <p><a class="btn btn-primary btn-lg" href="order.jsp" role="button">Order &raquo;</a></p>
       </div>
     </div>
 
@@ -107,11 +93,6 @@
     <script src="../../dist/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
-    
-    </c:when>
-	<c:otherwise>
-	<jsp:forward page="user.jsp" />
-	</c:otherwise>
-	</c:choose>
+
   </body>
 </html>

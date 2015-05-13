@@ -5,12 +5,15 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Strawberry Cafe - Order Status</title>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 
 <%-- Add new invoice/order here --%>
 
-<jsp:include page="userNavBar.jsp" flush="true" />
+
+
+
 	<div class="container">
 	<div class="jumbotron">
        <h1></h1>
@@ -19,7 +22,14 @@
 	        <tr><th colspan="2" style="text-align:center"><span class="glyphicon glyphicon-user"></span>Order Status</th></tr>
 	        <tr>
 		        <td>Order ID</td> 
-	        	<td>${order.orderId}</td>
+		        <c:choose>  
+				<c:when test="${order.orderId eq 0}"> <%-- check if user session is equal to user --%>    
+				<td>This order ID doesn't exist!</td>
+				</c:when>  
+				<c:otherwise>
+				<td>${order.orderId}</td>
+				</c:otherwise>
+				</c:choose>   	
 	        </tr> 
 	        <tr>
 		        <td>Description</td> 
@@ -39,7 +49,7 @@
 		        </td>
 	        </tr>
 	        <tr>
-		 		<td colspan="2" align="center"><a class="btn btn-default" href="order.jsp">Back to Order Menu</a></td>
+		 		<td colspan="2" align="center"><a class="btn btn-default" href="index.jsp">Back to Main Page</a></td>
 	 		</tr>
 	 	</table>
     </div>

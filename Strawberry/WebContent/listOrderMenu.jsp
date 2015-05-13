@@ -11,6 +11,11 @@
 <c:choose>  
 <c:when test="${sessionScope.user eq 'user'}"> <%-- check if user session is equal to user --%>    
 <jsp:include page="userNavBar.jsp" flush="true" />
+</c:when>  
+<c:otherwise>
+<jsp:include page="adminNavBar.jsp" flush="true" />
+</c:otherwise>
+</c:choose>
 
 <div class="container">
 
@@ -57,7 +62,15 @@
 					<td><input type="submit" class="btn btn-sm btn-primary" value="Add Menu"></td>
 		</table>
 		</form>
-		<p align="center"><a class="btn btn-dm btn-default" href="order.jsp">Back to Order Page</a></p>
+		<c:choose>  
+		<c:when test="${sessionScope.user eq 'user'}"> <%-- check if user session is equal to user --%>    
+		<p align="center"><a class="btn btn-dm btn-success" href="OrderMenu?action=checkout&orderId=${orderId}">Checkout</a></p>
+		</c:when>  
+		<c:otherwise>
+		<p align="center"><a class="btn btn-dm btn-primary" href="order.jsp">Back to Order List</a></p>
+		</c:otherwise>
+		</c:choose>
+		
 	</div> <!-- /container -->
 
 
@@ -69,10 +82,5 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
 
-</c:when>  
-<c:otherwise>
-<jsp:forward page="admincp.jsp" />
-</c:otherwise>
-</c:choose>
 </body>
 </html>

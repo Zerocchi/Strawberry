@@ -29,6 +29,7 @@ public class OrderMenuController extends HttpServlet {
 	private OrderDao orderDAO;
 	private MenuDao menuDAO;
 	private static String LIST = "listOrderMenu.jsp";
+	private static String CHECKOUT = "checkout.jsp";
 	private static String ADD_OR_EDIT = "ordermenu.jsp";
 	List<Menu> menus;
        
@@ -76,6 +77,12 @@ public class OrderMenuController extends HttpServlet {
 			forward = ADD_OR_EDIT;
             Order order = orderDAO.getOrderById(orderId);
             request.setAttribute("order", order);
+		} else if(action.equalsIgnoreCase("checkout")){
+			forward = CHECKOUT;
+			int orderIdFromRand = orderDAO.getOrderIdByRandomNum((int)session.getAttribute("random"));
+			request.setAttribute("totalPrice", orderDAO.getTotalPriceByOrderId(orderIdFromRand));
+			request.setAttribute("orderId", orderId);
+			session.invalidate();
 		}
 		
 		RequestDispatcher view = request.getRequestDispatcher(forward);

@@ -17,7 +17,7 @@
      </div>
 	    <form method="POST" action='Order' name="frmAddMenu">
 	    <table class="table table-bordered" style="width:40%" align="center">
-	        <tr><th colspan="2" style="text-align:center"><span class="glyphicon glyphicon-user"></span> Add/Edit Invoices</th></tr>
+	        <tr><th colspan="2" style="text-align:center"><span class="glyphicon glyphicon-user"></span> Order</th></tr>
 	        <tr>
 		        <td>Order ID</td> 
 	        	<td>

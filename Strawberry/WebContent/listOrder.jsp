@@ -35,8 +35,6 @@
 					<td>${order.description}</td>
 					<td align="center"><a class="btn btn-sm btn-primary" href="OrderMenu?action=listMenu&orderId=<c:out value="${order.orderId}"/>">
 					<span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>Menu List</a>
-					<a class="btn btn-sm btn-primary" href="Order?action=status&orderId=<c:out value="${order.orderId}"/>">
-					<span class="glyphicon glyphicon-bell" aria-hidden="true"></span>Status</a>
 					<a class="btn btn-sm btn-primary" href="Order?action=edit&orderId=<c:out value="${order.orderId}"/>">
 					<span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>Update</a>
 					<a class="btn btn-sm btn-danger" href="Order?action=delete&orderId=<c:out value="${order.orderId}"/>">

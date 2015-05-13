@@ -13,6 +13,7 @@ public class Order implements Serializable {
 	private int userId;
 	private String description;
 	private int status; // 0 for not ready, 1 for OK
+	private int randomNum;
 
 	public Order(){}
 	
@@ -52,6 +53,14 @@ public class Order implements Serializable {
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+
+	public int getRandomNum() {
+		return randomNum;
+	}
+
+	public void setRandomNum(int randomNum) {
+		this.randomNum = randomNum;
 	}
 	
 }

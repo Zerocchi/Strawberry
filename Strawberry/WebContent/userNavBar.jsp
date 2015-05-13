@@ -23,12 +23,12 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li><a href="user.jsp">Home</a></li>
+            <li><a href="index.jsp">Main</a></li>
             <li><a href="order.jsp">Order</a></li>
             <li><a href="admincp.jsp">Admin</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-          	<li><a href=#>You are logged in as <strong><c:out value="${sessionScope.user}"/></strong></a></li>
+          	<li><a href=#>Welcome <strong><c:out value="${sessionScope.user}"/></strong></a></li>
             <li><a href="Logout">Log Out</a></li>
           </ul>
         </div><!--/.nav-collapse -->
