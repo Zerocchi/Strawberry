@@ -232,7 +232,7 @@ public class OrderDao {
 		if(con == null)
 			con = ConnectionProvider.getCon();
 		try {
-			PreparedStatement ps = con.prepareStatement("select sum(m.menu_price * om.quantity) as total from ordermenu om, "
+			PreparedStatement ps = con.prepareStatement("select round(to_char(sum(m.menu_price * om.quantity)),2) as total from ordermenu om, "
 					+ "orders o, menu m where om.order_id = o.order_id and om.menu_id = m.menu_id and o.customer_id = ?");
 			ps.setInt(1, customerId);
 			ResultSet rs = ps.executeQuery();
@@ -255,7 +255,7 @@ public class OrderDao {
 		if(con == null)
 			con = ConnectionProvider.getCon();
 		try {
-			PreparedStatement ps = con.prepareStatement("select sum(m.menu_price * om.quantity) as total from ordermenu om, "
+			PreparedStatement ps = con.prepareStatement("select round(to_char(sum(m.menu_price * om.quantity)),2) as total from ordermenu om, "
 					+ "orders o, menu m where om.order_id = o.order_id and om.menu_id = m.menu_id and o.order_id = ?");
 			ps.setInt(1, orderId);
 			ResultSet rs = ps.executeQuery();

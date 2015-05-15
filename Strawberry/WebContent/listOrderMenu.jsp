@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@page isELIgnored="false" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <html>
 <head>
 <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
@@ -42,10 +43,12 @@
 		        		</tr>
 	        		</c:if>
 	        		<tr>
+	        		<c:set var="menuPrice"><fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${menu.menuPrice}" /></c:set>
+	        		<c:set var="menuTotal"><fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${menu.menuPrice * menu.quantity}" /></c:set>
 					<td>${menu.menuName}</td>
-					<td>${menu.menuPrice}</td>
+					<td>RM${menuPrice}</td>
 					<td>${menu.quantity}</td>
-					<td>${menu.menuPrice * menu.quantity}</td>
+					<td>RM${menuTotal}</td>
 					<td><a class="btn btn-sm btn-danger" href="OrderMenu?action=delete&orderId=${orderId}&menuId=${menu.menuId}">Delete Menu</a></td>
 					</tr>
 				</c:forEach>
@@ -53,7 +56,8 @@
 					<td colspan="2">
 						<select name="menuid" class="form-control">
 						<c:forEach var="allmenu" items="${allmenulist}">
-				  				<option value="${allmenu.menuId}">${allmenu.menuName} (RM${allmenu.menuPrice})</option>			  			
+								<c:set var="allMenuPrice"><fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${allmenu.menuPrice}" /></c:set>
+				  				<option value="${allmenu.menuId}">${allmenu.menuName} (RM${allMenuPrice})</option>			  			
 						</c:forEach>
 						</select>
 					</td>

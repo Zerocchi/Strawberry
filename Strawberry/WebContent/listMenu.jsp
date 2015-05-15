@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@page isELIgnored="false" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <html>
 <head>
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -27,9 +28,10 @@
 		</tr>
 		<c:forEach var="menu" items="${list}">
 			<tr>
+				<c:set var="menuPrice"><fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${menu.menuPrice}" /></c:set>
 				<td><c:out value="${menu.menuId}" /></td>
 				<td><c:out value="${menu.menuName}" /></td>
-				<td><c:out value="${menu.menuPrice}" /></td>
+				<td>RM<c:out value="${menuPrice}" /></td>
 				<td><a class="btn btn-sm btn-primary" href="Menu?action=edit&menuId=<c:out value="${menu.menuId}"/>">Update</a>
 				<a class="btn btn-sm btn-danger" href="Menu?action=delete&menuId=<c:out value="${menu.menuId}"/>">Delete</a></td>
 			</tr>

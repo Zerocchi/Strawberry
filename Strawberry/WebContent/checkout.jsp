@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@page isELIgnored="false" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -28,6 +29,7 @@
 					</div>
 					<div class="panel-body">
 						<div class="form-group" align="center">
+							<c:set var="totalPrice"><fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${totalPrice}" /></c:set>
 							Thanks for ordering with us! Your order ID is <strong>${orderId}</strong>. Please write it down on a medium.
 							Total price of your ordering is RM<strong>${totalPrice}</strong>.
 						</div>
