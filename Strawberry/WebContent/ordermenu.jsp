@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <title>Strawberry Cafe - Add or edit menu</title>
 </head>
 <body>
